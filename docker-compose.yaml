@@ -5,6 +5,7 @@ services:
       args:
         UID: ${HOST_UID}
         GID: ${HOST_GID}
+    image: entry_tracker:latest
     container_name: EntryTrackr_app
     ports:
       - "5000:5000"
