@@ -39,6 +39,7 @@ jobs:
         run: |
            HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up --build -d
            sleep 20  
+           docker images  # Debug step to list images
            curl http://localhost:5000
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
