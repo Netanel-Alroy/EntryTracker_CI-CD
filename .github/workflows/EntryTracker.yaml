@@ -24,12 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Removed the Start app in background step
-      # Docker will handle the app startup
-
-      - name: Run unit test with curl
-        run: curl http://localhost:5000
-
       - name: Install Docker Compose Plugin
         run: |
           DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
@@ -44,6 +38,7 @@ jobs:
       - name: Build and start Docker containers
         run: |
            HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up --build -d
+           sleep 20  
            curl http://localhost:5000
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
