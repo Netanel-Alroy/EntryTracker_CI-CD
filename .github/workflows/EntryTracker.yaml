@@ -61,3 +61,25 @@ jobs:
         run: |
           docker tag entry_tracker:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: unit-test  
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2 instance
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_IP_ADDRESS }}  
+          username: ubuntu 
+          key: ${{ secrets.EC2_SSH_KEY }} 
+          port: 22 
+          script: |
+            cd /home/ubuntu/entryTracker
+            docker compose pull
+            docker-compose up -d --build
+      
