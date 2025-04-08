@@ -50,18 +50,18 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCOUNT_ID }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
       - name: Authenticate Docker to AWS ECR
         run: |
-          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCESS_KEY_ID }}.dkr.ecr.ap-south-1.amazonaws.com
 
       - name: Tag and Push Docker image to ECR
         run: |
-          docker tag entry_tracker:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
+          docker tag entry_tracker:latest ${{ secrets.AWS_SECRET_ACCESS_KEY }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
+          docker push ${{ secrets.AWS_SECRET_ACCESS_KEY }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
 
   deploy:
     runs-on: ubuntu-latest
