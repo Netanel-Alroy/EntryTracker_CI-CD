@@ -5,7 +5,7 @@ services:
       args:
         UID: ${HOST_UID}
         GID: ${HOST_GID}
-    image: "${AWS_ACCOUNT_ID}.dkr.ecr.ap-south-1.amazonaws.com/${REPO_NAME}:latest"
+    image: entry_tracker:latest
     container_name: entrytrackr_app
     ports:
       - "5000:5000"
