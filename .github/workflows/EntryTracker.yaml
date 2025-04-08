@@ -61,7 +61,7 @@ jobs:
       - name: Tag and Push Docker image to ECR
         run: |
           docker tag entry_tracker:latest ${{ secrets.AWS_ACCESS_KEY_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
-          docker push ${{ secrets.AWS_SECRET_ACCESS_KEY }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
+          docker push ${{ secrets.AWS_ACCESS_KEY_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
 
   deploy:
     runs-on: ubuntu-latest
