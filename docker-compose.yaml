@@ -5,13 +5,12 @@ services:
       args:
         UID: ${HOST_UID}
         GID: ${HOST_GID}
-    image: entry_tracker:latest
-    container_name: EntryTrackr_app
+    image: ${AWS_ACCOUNT_ID}.dkr.ecr.ap-south-1.amazonaws.com/${REPO_NAME}:latest
+    container_name: entrytrackr_app
     ports:
       - "5000:5000"
     networks:
       - app_network
-      - db_network
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
@@ -19,34 +18,11 @@ services:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
     healthcheck:
-      test: [ "CMD", "curl", "http://localhost:5000" ]
+      test: ["CMD", "curl", "http://localhost:5000"]
       interval: 15s
-      timeout: 3s
-      retries: 3  
-    depends_on:
-      - mysql
-
-  mysql:
-    image: mysql:5.7
-    container_name: mysql_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "3306:3306"
-    networks:
-      - db_network
-    volumes:
-      - db_data:/var/lib/mysql
+      timeout: 5s
+      retries: 3
 
 networks:
   app_network:
     driver: bridge
-  db_network:
-    driver: bridge
-volumes:
-  db_data:
-    driver: local

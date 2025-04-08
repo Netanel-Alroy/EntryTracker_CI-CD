@@ -4,7 +4,7 @@ FROM python:3.10-alpine
 ARG UID
 ARG GID
 
-
+# Update the package list, install sudo, create a non-root user, and grant password-less sudo permission
 RUN apk update && apk add --no-cache curl openssl-dev sudo && \
     addgroup -g $GID nonroot && \
     adduser -u $UID -G nonroot --disabled-password --gecos "" nonroot && \
