@@ -36,7 +36,7 @@ jobs:
       - name: Build and start Docker containers
         run: |
            HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose up --build -d
-           sleep 20  
+           sleep 15  
            curl http://localhost:5000
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
