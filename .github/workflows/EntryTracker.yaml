@@ -33,7 +33,7 @@ jobs:
       - name: Build and start Docker containers
         run: |
           docker build --build-arg UID=${{ env.HOST_UID }} --build-arg GID=${{ env.HOST_GID }} -t entry_tracker:latest .
-          docker run -d -p 5000:5000 entry_tracker:latest
+          HOST_UID=${{ env.HOST_UID }} HOST_GID=${{ env.HOST_GID }} docker compose up -d
           sleep 20
           curl http://localhost:5000
         env:
