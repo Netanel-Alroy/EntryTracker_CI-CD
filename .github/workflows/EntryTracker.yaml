@@ -38,7 +38,6 @@ jobs:
           curl http://localhost:5000
         env:
           DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
@@ -87,12 +86,10 @@ jobs:
             export HOST_UID=$(id -u)
             export HOST_GID=$(id -g)
             
-            # Pull the latest Docker image
+            # Pull the latest Docker image from ECR
             docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
             
             # Run the Docker container with the right UID and GID
             docker run -d -p 5000:5000 --user $HOST_UID:$HOST_GID ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/${{ secrets.REPO_NAME }}:latest
-            
-            # Optionally, check if the app is running
             sleep 20
             curl http://localhost:5000
