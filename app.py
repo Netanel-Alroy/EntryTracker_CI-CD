@@ -17,6 +17,8 @@ DB_CONFIG = {
     'database': os.environ.get('DB_NAME')
 }
 
+# Debug: Print the DB_CONFIG
+print("DB_CONFIG:", DB_CONFIG)
 
 def get_db_connection():
     connection = pymysql.connect(**DB_CONFIG)
